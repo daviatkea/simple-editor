@@ -339,6 +339,8 @@ button[disabled] {
 }
 
 .editor > button {
+  display: grid;
+  place-content: center;
   position: absolute;
   inset-inline-end: 0;
   inset-block-start: 0.25em;
