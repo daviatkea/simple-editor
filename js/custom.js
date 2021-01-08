@@ -12,6 +12,7 @@
   });
 })(Bliss, Bliss.$);
 
+const editors = document.querySelectorAll(".editor");
 const preview = document.querySelector(".preview");
 const editable = document.querySelector(".editable");
 const textareaHTML = document.querySelector(".playable-html");
@@ -35,42 +36,77 @@ resetAll.addEventListener("click", () => {
   preview.removeAttribute("style");
   localStorage.removeItem("htmlKey");
   localStorage.removeItem("cssKey");
+  editors.forEach((editor) => {
+    const reset = editor.querySelector(":scope button");
+    editor.open = true;
+    reset.disabled = true;
+  });
   textareaHTML.focus();
   textareaCSS.focus();
 });
 
-function resetCode(el, code, key) {
+function resetCode(el, code, key, reset = undefined) {
   el.value = code;
   fillCode();
   preview.removeAttribute("style");
   localStorage.removeItem(key);
   el.focus();
+
+  if (el.value !== code) {
+    reset.disabled = false;
+  } else {
+    reset.disabled = true;
+  }
 }
 
-function saveToLocal(el, key) {
+function saveToLocal(el, key, code = undefined, reset = undefined) {
   if (localStorage.getItem(key)) {
     el.value = localStorage.getItem(key);
     fillCode();
+
+    if (el.value !== code) {
+      reset.disabled = false;
+    } else {
+      reset.disabled = true;
+    }
   }
 
   el.addEventListener("input", (e) => {
     fillCode();
     localStorage.setItem(key, el.value);
+
+    if (el.value !== code) {
+      reset.disabled = false;
+    } else {
+      reset.disabled = true;
+    }
   });
 }
 
 const init = () => {
-  saveToLocal(textareaHTML, "htmlKey");
-  saveToLocal(textareaCSS, "cssKey");
+  saveToLocal(textareaHTML, "htmlKey", htmlCode, resetHTML);
+  saveToLocal(textareaCSS, "cssKey", cssCode, resetCSS);
+
+  if (textareaHTML.value !== htmlCode) {
+    resetHTML.disabled = false;
+  } else {
+    resetHTML.disabled = true;
+  }
+
+  if (textareaCSS.value !== cssCode) {
+    resetCSS.disabled = false;
+  } else {
+    resetCSS.disabled = true;
+  }
 };
 
 init();
 
 resetHTML.addEventListener("click", () => {
-  resetCode(textareaHTML, htmlCode, "htmlKey");
+  resetCode(textareaHTML, htmlCode, "htmlKey", resetHTML);
 });
 resetCSS.addEventListener("click", () => {
-  resetCode(textareaCSS, cssCode, "cssKey");
+  resetCode(textareaCSS, cssCode, "cssKey", resetCSS);
 });
 textareaHTML.addEventListener("input", fillCode);
 textareaCSS.addEventListener("input", fillCode);
