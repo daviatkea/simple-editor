@@ -384,3 +384,7 @@ code {
   font-family: "Roboto Mono", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
     monospace !important;
 }
+
+textarea.prism-live {
+  --max-height: 250px;
+}
