@@ -38,7 +38,8 @@ resetAll.addEventListener("click", () => {
   localStorage.removeItem("cssKey");
   editors.forEach((editor) => {
     const reset = editor.querySelector(":scope button");
-    editor.open = true;
+    const details = editor.querySelector(":scope > details");
+    details.open = true;
     reset.disabled = true;
   });
   textareaHTML.focus();
@@ -46,11 +47,20 @@ resetAll.addEventListener("click", () => {
 });
 
 function resetCode(el, code, key, reset = undefined) {
+  let detailsOpen = false;
   el.value = code;
   fillCode();
   preview.removeAttribute("style");
   localStorage.removeItem(key);
+  if (el.closest("details").open === false) {
+    el.closest("details").open = true;
+    detailsOpen = true;
+  }
   el.focus();
+  if (detailsOpen) {
+    el.closest("details").open = false;
+    detailsOpen = false;
+  }
 
   if (el.value !== code) {
     reset.disabled = false;

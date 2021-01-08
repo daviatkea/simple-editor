@@ -28,6 +28,10 @@ body {
   outline: none;
 }
 
+summary:focus-visible {
+  box-shadow: inset 0 0 0 2px #fb28a8;
+}
+
 .main-header,
 footer {
   display: grid;
@@ -242,6 +246,10 @@ article > div {
 
 .editor {
   position: relative;
+}
+
+.editor > details {
+  position: relative;
   border-radius: 0.25rem;
   background: #2c203b;
   overflow: auto;
@@ -250,9 +258,10 @@ article > div {
   /* box-shadow: hsla(293, 43%, 32%, 0.4) -5px 5px, hsla(293, 43%, 32%, 0.3) -10px 10px, hsla(293, 43%, 32%, 0.2) -15px 15px, hsla(293, 43%, 32%, 0.1) -20px 20px, hsla(293, 43%, 32%, 0.05) -25px 25px; */
   justify-self: stretch;
   align-self: start;
+  padding-block-end: 0;
 }
 
-.editor::before {
+.editor > details::before {
   content: attr(data-lang);
   content: none;
   display: block;
@@ -338,7 +347,8 @@ button[disabled] {
   cursor: default;
 }
 
-.editor > button {
+/* .editor > button { */
+button[class|="reset"]:not([class*="-all"]) {
   display: grid;
   place-content: center;
   position: absolute;
