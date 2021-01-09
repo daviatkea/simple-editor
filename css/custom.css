@@ -61,7 +61,7 @@ footer > * {
 
 main {
   display: grid;
-  grid: auto / minmax(1rem, 1fr) minmax(auto, 1200px) minmax(1rem, 1fr);
+  grid: auto / minmax(1rem, 1fr) minmax(0, 1200px) minmax(1rem, 1fr);
   gap: 3rem 0;
   counter-reset: task;
 }
@@ -246,6 +246,7 @@ article > div {
 
 .editor {
   position: relative;
+  min-inline-size: 0;
 }
 
 .editor > details {
