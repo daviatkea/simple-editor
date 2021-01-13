@@ -330,6 +330,7 @@ button {
 
 @media (hover: hover) {
   button:hover {
+    --o: 1;
     box-shadow: inset 0 0 0 2px #fb28a8;
   }
   button[disabled]:hover {
@@ -361,6 +362,27 @@ button[class|="reset"]:not([class*="-all"]) {
   padding: 0;
   inline-size: 25px;
   block-size: 25px;
+  border-radius: 0 6px 6px 0;
+}
+
+button[class|="reset"]:not([class*="-all"])::before {
+  position: absolute;
+  content: "Reset";
+  inset-inline-end: 0px;
+  inset-block-start: 0;
+  transform: translateX(-23px);
+  background: #fb28a8;
+  padding-inline: 0.5rem;
+  line-height: 1;
+  border-radius: 6px 0 0 6px;
+  block-size: 25px;
+  display: grid;
+  place-content: center;
+  font-size: 0.8em;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+  opacity: var(--o, 0);
+  transition: 0.2s;
 }
 
 button.plus::before,
